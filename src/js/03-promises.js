@@ -16,11 +16,11 @@ function handleFormSubmit(event) {
     const position = i;
     const delayTime = delay + step * (i - 1);
     createPromise(position, delayTime)
-      .then(({ position, delay }) => {
-        Notiflix.Notify.Success(`✅ Fulfilled promise ${position} in ${delay}ms`);
+      .then(({ position, delayTime }) => {
+        Notiflix.Notify.Success(`✅ Fulfilled promise ${position} in ${delayTime}ms`);
       })
-      .catch(({ position, delay }) => {
-        Notiflix.Notify.Failure(`❌ Rejected promise ${position} in ${delay}ms`);
+      .catch(({ position, delayTime }) => {
+        Notiflix.Notify.Failure(`❌ Rejected promise ${position} in ${delayTime}ms`);
       });
   }
 }
@@ -30,15 +30,10 @@ function createPromise(position, delayTime) {
     const shouldResolve = Math.random() > 0.3;
     setTimeout(() => {
       if (shouldResolve) {
-        resolve({ position, delay });
+        resolve({ position, delayTime });
       } else {
-        reject({ position, delay });
+        reject({ position, delayTime });
       }
     }, delayTime);
   });
 }
-
-
-
-
-
