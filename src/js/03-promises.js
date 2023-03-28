@@ -1,6 +1,6 @@
 import Notiflix from 'notiflix';
 import 'notiflix/dist/notiflix-3.2.6.min.css';
-
+Notiflix.Notify.init({ useIcon: false });
 
 const form = document.querySelector('.form');
 form.addEventListener('submit', handleFormSubmit);
@@ -8,51 +8,37 @@ form.addEventListener('submit', handleFormSubmit);
 function handleFormSubmit(event) {
   event.preventDefault();
 
-  const delayInput = document.querySelector('input[name="delay"]');
-  const stepInput = document.querySelector('input[name="step"]');
-  const amountInput = document.querySelector('input[name="amount"]');
+  const delay = Number(event.target.elements.delay.value);
+  const step = Number(event.target.elements.step.value);
+  const amount = Number(event.target.elements.amount.value);
 
-  const delay = parseInt(delayInput.value);
-  const step = parseInt(stepInput.value);
-  const amount = parseInt(amountInput.value);
-
-  createPromises(amount, delay, step);
-}
-
-function createPromises(amount, delay, step) {
-  for (let i = 0; i < amount; i++) {
-    const position = i + 1;
-    const delayTime = delay + i * step;
-    const promise = createPromise(position, delayTime);
-
-    promise
-      .then(({ position, delayTime }) => {
-        Notiflix.Notify.Success(`✅ Fulfilled promise ${position} in ${delayTime}ms`);
+  for (let i = 1; i <= amount; i++) {
+    const position = i;
+    const delayTime = delay + step * (i - 1);
+    createPromise(position, delayTime)
+      .then(({ position, delay }) => {
+        Notiflix.Notify.Success(`✅ Fulfilled promise ${position} in ${delay}ms`);
       })
-      .catch(({ position, delayTime }) => {
-        Notiflix.Notify.Failure(`❌ Rejected promise ${position} in ${delayTime}ms`);
+      .catch(({ position, delay }) => {
+        Notiflix.Notify.Failure(`❌ Rejected promise ${position} in ${delay}ms`);
       });
   }
 }
-
-// function createPromise(position, delay) {
-//   const shouldResolve = Math.random() > 0.3;
-//   if (shouldResolve) {
-//     // Fulfill
-//   } else {
-//     // Reject
-//   }
-// }
 
 function createPromise(position, delayTime) {
   return new Promise((resolve, reject) => {
     const shouldResolve = Math.random() > 0.3;
     setTimeout(() => {
       if (shouldResolve) {
-        resolve({ position, delayTime });
+        resolve({ position, delay });
       } else {
-        reject({ position, delayTime });
+        reject({ position, delay });
       }
     }, delayTime);
   });
 }
+
+
+
+
+
