@@ -1,6 +1,3 @@
-import Notiflix from 'notiflix';
-
-
 const form = document.querySelector('.form');
 form.addEventListener('submit', handleFormSubmit);
 
@@ -16,10 +13,10 @@ function handleFormSubmit(event) {
     const delayTime = delay + step * (i - 1);
     createPromise(position, delayTime)
       .then(({ position, delayTime }) => {
-        Notiflix.Notify.Success(`✅ Fulfilled promise ${position} in ${delayTime}ms`);
+        showNotification(`✅ Fulfilled promise ${position} in ${delayTime}ms`, 'success');
       })
       .catch(({ position, delayTime }) => {
-        Notiflix.Notify.Failure(`❌ Rejected promise ${position} in ${delayTime}ms`);
+        showNotification(`❌ Rejected promise ${position} in ${delayTime}ms`, 'failure');
       });
   }
 }
@@ -35,4 +32,15 @@ function createPromise(position, delayTime) {
       }
     }, delayTime);
   });
+}
+
+function showNotification(message, type) {
+  const notification = document.createElement('div');
+  notification.classList.add('notification', type);
+  notification.textContent = message;
+  document.body.append(notification);
+
+  setTimeout(() => {
+    notification.remove();
+  }, 3000);
 }
