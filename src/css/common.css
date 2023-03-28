@@ -17,36 +17,3 @@ img {
   display: block;
   max-width: 100%;
 }
-
-/* .wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #f7f7f7;
-}
-
-.title {
-  font-size: 48px;
-  margin-bottom: 40px;
-} */
-
-/* .button-container {
-  display: flex;
-} */
-
-button {
-  font-size: 24px;
-  padding: 10px 20px;
-  margin: 0 10px;
-  border-radius: 5px;
-  border: none;
-  background-color: #333;
-  color: #fff;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #555;
-}
